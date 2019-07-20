@@ -40,7 +40,7 @@ AppAsset::register($this);
     $menuItems = [
         ['label' => 'Home', 'url' => ['/site/index']],
         ['label' => 'Пункты обмена', 'url' => ['exchange-points/index']],
-        ['label' => 'Данные', 'url' => ['settings']],
+        ['label' => 'Данные', 'url' => ['/entities/settings']],
     ];
 
     if (Yii::$app->user->isGuest) {
