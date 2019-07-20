@@ -60,7 +60,7 @@ AppAsset::register($this);
         [
             'label' => 'Администрирование',
             'items' => [
-                ['label' => 'Пользователи', 'url' => ['/users/index']],
+               // ['label' => 'Пользователи', 'url' => ['/users/index']],
                 ['label' => 'Отзывы', 'url' => ['/reviews/index']],
                 ['label' => 'Обратная связь', 'url' => ['/request/index']],
 
