@@ -18,7 +18,7 @@ class DefaultController extends Controller
     {
         /** @var User $user */
         if (($user = \Yii::$app->user->identity) && ($model = $user->entity)) {
-            return $this->render('index', ['model' => $model]);
+            return $this->redirect('/entities/exchange-points/index');
         } else {
             return $this->redirect('login');
         }

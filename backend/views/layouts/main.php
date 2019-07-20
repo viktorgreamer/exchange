@@ -53,7 +53,7 @@ AppAsset::register($this);
             'items' => [
                 ['label' => 'Сети', 'url' => ['/entities/index']],
                 ['label' => 'Пункты обмена', 'url' => ['/exchange-points/index']],
-                ['label' => 'Графики работы', 'url' => ['/opening-hours/index']],
+                //['label' => 'Графики работы', 'url' => ['/opening-hours/index']],
                 ['label' => 'Обменные курсы', 'url' => ['/exchange-rates/index']],
             ],
         ],
