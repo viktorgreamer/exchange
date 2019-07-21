@@ -1,4 +1,5 @@
 <?php
+
 namespace frontend\components;
 
 use common\models\Auth;
