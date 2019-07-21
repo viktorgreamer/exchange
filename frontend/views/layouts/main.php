@@ -65,6 +65,7 @@ AppAsset::register($this);
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
         <?= Alert::widget() ?>
+       <?php echo \yii\helpers\Json::encode(Yii::$app->user); ?>
         <?= $content ?>
     </div>
 </div>

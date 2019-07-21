@@ -43,7 +43,7 @@ class AuthHandler
                 $user = $auth->user;
                 $this->updateUserInfo($user);
                $response =  Yii::$app->user->login($user, Yii::$app->params['user.rememberMeDuration']);
-               if ($response)   Yii::$app->session->setFlash('success','user auth found 46 ');
+               if ($response)  Yii::$app->session->setFlash('success','user auth found 46 ');
             } else { // signup
                 if ($email !== null && User::find()->where(['email' => $email])->exists()) {
                     Yii::$app->getSession()->setFlash('error', [
