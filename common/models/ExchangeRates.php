@@ -21,7 +21,6 @@ use yii\behaviors\TimestampBehavior;
  */
 class ExchangeRates extends \yii\db\ActiveRecord
 {
-
     public function behaviors()
     {
         return [
@@ -31,6 +30,15 @@ class ExchangeRates extends \yii\db\ActiveRecord
                 'updatedAtAttribute' => 'updated_at',
             ],
         ];
+    }
+
+    public function fields()
+    {
+        $fields = parent::fields();
+        $fields[] = 'pair';
+        $fields[] = 'point';
+        unset($fields['created_at']);
+        return $fields;
     }
 
     /**
@@ -83,6 +91,8 @@ class ExchangeRates extends \yii\db\ActiveRecord
             'updated_at' => Yii::t('app', 'Обновлен в'),
         ];
     }
+
+
 
     /**
      * @return \yii\db\ActiveQuery

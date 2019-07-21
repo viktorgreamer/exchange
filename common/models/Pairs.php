@@ -29,7 +29,7 @@ class Pairs extends \yii\db\ActiveRecord
 
     public static function map()
     {
-        return ArrayHelper::map(self::find()->all(),'id','render');
+        return ArrayHelper::map(self::find()->all(), 'id', 'render');
     }
 
     /**
@@ -56,11 +56,11 @@ class Pairs extends \yii\db\ActiveRecord
                 [
                     'currency_to_id' => $this->currency_to_id,
                     'currency_from_id' => $this->currency_from_id
-                ])->andWhere(['<>','id',$this->id])->exists() || self::find()->where(
+                ])->andWhere(['<>', 'id', $this->id])->exists() || self::find()->where(
                 [
                     'currency_to_id' => $this->currency_from_id,
                     'currency_from_id' => $this->currency_to_id
-                ])->andWhere(['<>','id',$this->id])->exists()) $this->addError('currency_to_id', Yii::t('app', 'Данная валютная пара уже существует.'));
+                ])->andWhere(['<>', 'id', $this->id])->exists()) $this->addError('currency_to_id', Yii::t('app', 'Данная валютная пара уже существует.'));
     }
 
     public function getRender()
@@ -76,6 +76,13 @@ class Pairs extends \yii\db\ActiveRecord
     public function getCurrencyTo()
     {
         return $this->hasOne(Currencies::className(), ['id' => 'currency_to_id']);
+    }
+
+    public function fields()
+    {
+        $fields = parent::fields();
+        $fields[] = 'render';
+        return $fields;
     }
 
     /**

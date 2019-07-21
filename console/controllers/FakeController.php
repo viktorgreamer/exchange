@@ -17,7 +17,9 @@ use common\models\ContentNews;
 use common\models\Developers;
 use common\models\Programs;
 use common\models\Reviews;
+use common\models\services\GoogleGeolocation;
 use Faker\Factory;
+use yii\helpers\ArrayHelper;
 
 class FakeController extends \yii\console\Controller
 {
@@ -43,7 +45,20 @@ class FakeController extends \yii\console\Controller
     }
 
 
-    public function actionAddData() {
+    public function actionGeocode()
+    {
+        $address = 'Киев крещатик  д 1';
+        $google = new GoogleGeolocation($address);
+        $google->handle();
+
+        if ($google->status) {
+            foreach ($google->getResponses() as $response) {
+                print_r($response);
+                echo $response->getFullAddress();
+            }
+
+        }
+
 
     }
 

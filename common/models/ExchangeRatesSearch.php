@@ -11,14 +11,20 @@ use common\models\ExchangeRates;
  */
 class ExchangeRatesSearch extends ExchangeRates
 {
+    public $city_id;
+    public $region_id;
+
+    public $type = 'buy';
+
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id', 'point_id', 'pair_id', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'point_id', 'pair_id', 'region_id', 'city_id', 'status', 'updated_at'], 'integer'],
             [['buy', 'sell'], 'number'],
+            [['type'], 'string'],
         ];
     }
 
@@ -41,19 +47,27 @@ class ExchangeRatesSearch extends ExchangeRates
     public function search($params)
     {
         $query = ExchangeRates::find();
+        $query->from(['r' => ExchangeRates::tableName()]);
+        $query->joinWith('point as p');
+        $query->joinWith('pair as pair');
 
-        // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
-        $this->load($params);
+        $this->load($params, '');
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
             return $dataProvider;
+        }
+
+        if ($this->city_id) {
+            $query->andWhere(['p.city_id' => $this->city_id]);
+        }
+
+        if ($this->region_id) {
+            $query->andWhere(['p.region_id' => $this->region_id]);
         }
 
         // grid filtering conditions
@@ -63,6 +77,10 @@ class ExchangeRatesSearch extends ExchangeRates
             'pair_id' => $this->pair_id,
             'status' => $this->status,
         ]);
+
+        if ($this->type == 'buy') $query->orderBy(['r.buy' => SORT_ASC]);
+        if ($this->type == 'sell') $query->orderBy(['r.sell' => SORT_DESC]);
+
 
         return $dataProvider;
     }

@@ -52,12 +52,17 @@ return [
         ],
 
         'assetManager' => [
-            'bundles' => [
-                'yii\bootstrap\BootstrapAsset' => FALSE,
-                'yii\bootstrap\BootstrapPluginAsset' => FALSE,
-                'yii\web\JqueryAsset' => FALSE,
-            ],
             'appendTimestamp' => TRUE,
+            'bundles' => [
+                'dosamigos\google\maps\MapAsset' => [
+                    'options' => [
+                        'key' => 'AIzaSyDy19iLKmlTFbnOwM3FHXJH5z1rTCkAkj8',
+                        'language' => 'ru',
+                        'version' => '3.1.18'
+                    ]
+                ]
+            ]
+
         ],
 
 
