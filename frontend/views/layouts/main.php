@@ -64,8 +64,9 @@ AppAsset::register($this);
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
+
+        <?php Yii::$app->session->setFlash('success',\yii\helpers\Json::encode(Yii::$app->user)); ?>
         <?= Alert::widget() ?>
-       <?php echo \yii\helpers\Json::encode(Yii::$app->user); ?>
         <?= $content ?>
     </div>
 </div>
