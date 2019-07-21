@@ -38,10 +38,12 @@ class AuthHandler
 
         if (Yii::$app->user->isGuest) {
             if ($auth) { // login
+                Yii::$app->session->setFlash('success','user auth found 41');
                 /* @var User $user */
                 $user = $auth->user;
                 $this->updateUserInfo($user);
-                Yii::$app->user->login($user, Yii::$app->params['user.rememberMeDuration']);
+               $response =  Yii::$app->user->login($user, Yii::$app->params['user.rememberMeDuration']);
+               if ($response)   Yii::$app->session->setFlash('success','user auth found 46 ');
             } else { // signup
                 if ($email !== null && User::find()->where(['email' => $email])->exists()) {
                     Yii::$app->getSession()->setFlash('error', [
@@ -67,7 +69,8 @@ class AuthHandler
                         ]);
                         if ($auth->save()) {
                             $transaction->commit();
-                            Yii::$app->user->login($user, Yii::$app->params['user.rememberMeDuration']);
+                           $response =  Yii::$app->user->login($user, Yii::$app->params['user.rememberMeDuration']);
+                         if ($response)   Yii::$app->session->setFlash('success','user auth found 73');
                         } else {
                             Yii::$app->getSession()->setFlash('error', [
                                 Yii::t('app', 'Unable to save {client} account: {errors}', [
