@@ -37,23 +37,23 @@ use yii\helpers\Url;
         <div id="app">
             <div class="row">
                 <div class="col-lg-4">
-                    <select v-model="city_id" class="form-control" @click="getRegions()">
+                    <select v-model="city_id" class="form-control" @change="getRegions();getRates();">
                         <option v-for="city in cities" v-bind:value="city.id"> {{ city.name }}</option>
                     </select>
                 </div>
                 <div class="col-lg-4">
-                    <select v-model="type" class="form-control" @click="getRates()">
+                    <select v-model="type" class="form-control" @change="getRates()">
                         <option value="buy"> Продажа</option>
                         <option value="sell"> Покупка</option>
                     </select>
                 </div>
                 <div class="col-lg-4">
-                    <select v-model="region_id" class="form-control" @click="getRates()">
+                    <select v-model="region_id" class="form-control" @change="getRates()">
                         <option v-for="region in regions" v-bind:value="region.id"> {{ region.name }}</option>
                     </select>
                 </div>
                 <div class="col-lg-4">
-                    <select v-model="pair_id" class="form-control" @click="getRates()">
+                    <select v-model="pair_id" class="form-control" @change="getRates()">
                         <option v-for="pair in pairs" v-bind:value="pair.id"> {{ pair.render }}</option>
                     </select>
                 </div>
@@ -63,6 +63,7 @@ use yii\helpers\Url;
                 <thead>
                 <tr>
                     <th>#</th>
+                    <th>Валюты</th>
                     <th>Точка</th>
                     <th>Buy</th>
                     <th>Sell</th>
@@ -72,6 +73,7 @@ use yii\helpers\Url;
                 <tr v-for="rate in rates">
                     <td>1</td>
                     <td>{{rate.pair.name}}</td>
+                    <td>{{rate.point.name}}</td>
                     <td>{{ rate.buy }}</td>
                     <td>{{rate.sell }}</td>
                 </tr>

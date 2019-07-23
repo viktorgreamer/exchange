@@ -41,7 +41,8 @@ class Entities extends \yii\db\ActiveRecord
             [
                 'class' => BlameableBehavior::className(),
                 'createdByAttribute' => 'user_id',
-                'updatedByAttribute' => false
+                'updatedByAttribute' => false,
+                'defaultValue' => 1
             ],
         ];
     }

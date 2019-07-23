@@ -9,8 +9,29 @@ use common\models\ExchangePoints;
 /**
  * ExchangePointsSearch represents the model behind the search form of `common\models\ExchangePoints`.
  */
-class ExchangePointsSearch extends ExchangePoints
+class ExchangePointsSearch extends Model
 {
+
+    public $id;
+    public $address;
+    public $latitude;
+    public $longitude;
+    public $entity_id;
+    public $city_id;
+    public $region_id;
+    public $time_start;
+    public $time_end;
+    public $phone1;
+    public $phone2;
+    public $name;
+    public $link;
+    public $status;
+    public $main;
+    public $rating;
+    public $rating_geo;
+    public $rating_actuality;
+    public $rating_service;
+
     /**
      * {@inheritdoc}
      */

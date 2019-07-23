@@ -1,8 +1,10 @@
 var map;
 var markers = [];
 var infoWindows = [];
+var bounds = [];
 
 function initMap() {
+
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 50.45466, lng: 30.5238},
         zoom: 8
@@ -15,10 +17,20 @@ function clearMarkers() {
     }
 }
 
+function renderLabel(rate) {
+  return  '<h3 class="panel-title">' + rate.point.name + '</h3>\n' +
+      'Покупка <span class="label label-success">'+ rate.buy +'</span>' +
+      'Продажа <span class="label label-danger">'+ rate.sell +'</span>' +
+      '<p>' + rate.point.address + '</p>' +
+      '<p>Часы работы:' + rate.point.today.from + '-' + rate.point.today.to + '</p>' +
+      '<p> Перерыв:' + rate.point.today.breakFrom + '-' + rate.point.today.breakTo + '</p>' +
+      '<p>' + '</p>';
+}
+
 function addMarker(rate, map) {
 
     var infoWindow = new google.maps.InfoWindow({
-        content: rate.point.name
+        content: renderLabel(rate)
     });
 
     infoWindows.push(infoWindow);
@@ -35,6 +47,9 @@ function addMarker(rate, map) {
     });
 
     markers.push(marker);
+
+    loc = new google.maps.LatLng(marker.position.lat(), marker.position.lng());
+    bounds.extend(loc);
 
 }
 
@@ -74,11 +89,18 @@ var app = new Vue({
                             for (let i = 0; i < markers.length; i++) {
                                 markers[i].setMap(null);
                             }
-
+                            markers = [];
+                            bounds = new google.maps.LatLngBounds();
                             for (let i = 0; i < app.rates.length; i++) {
                                 addMarker(app.rates[i], map);
                             }
+                            map.fitBounds(bounds);
+                            map.panToBounds(bounds);
+
                         }
+
+
+
                     }
                 })
                 .catch(function (error) {
@@ -147,9 +169,11 @@ var app = new Vue({
     },
 
     mounted() {
-        this.getRates();
+
         this.getPairs();
         this.getCities();
+
+        this.getRates();
     }
 
 })
