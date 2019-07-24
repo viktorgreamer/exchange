@@ -110,7 +110,6 @@ class ExchangePointsController extends Controller
         if ($model->setCurrencies(Yii::$app->request->post()['ExchangePoints']['currencies'])) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
-
         return $this->render('update_currencies', [
             'model' => $model,
         ]);

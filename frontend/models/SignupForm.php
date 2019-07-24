@@ -14,7 +14,7 @@ class SignupForm extends Model
     public $username;
     public $email;
     public $password;
-    public $as_developer;
+    public $as_company;
     public $_user;
 
 
@@ -24,7 +24,7 @@ class SignupForm extends Model
     public function rules()
     {
         return [
-            ['as_developer', 'integer'],
+            ['as_company', 'integer'],
             ['username', 'trim'],
             ['username', 'required'],
             ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
@@ -64,9 +64,9 @@ class SignupForm extends Model
 
     public function assignRole(User $user)
     {
-        if ($this->as_developer) {
+        if ($this->as_company) {
             $auth = Yii::$app->authManager;
-            $auth->assign($auth->getRole('developer'), $user->id);
+            $auth->assign($auth->getRole('entity'), $user->id);
             return true;
         }
         return true;
@@ -90,5 +90,10 @@ class SignupForm extends Model
             ->setTo($this->email)
             ->setSubject('Account registration at ' . Yii::$app->name)
             ->send();
+    }
+
+    public function attributeLabels()
+    {
+        return ['as_company' => 'Как компания'];
     }
 }

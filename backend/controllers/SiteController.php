@@ -60,7 +60,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->redirect('/admin/exchange-points/index');
+        return $this->redirect('/admin/entities/index');
     }
 
     /**

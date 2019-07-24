@@ -8,26 +8,16 @@
 
 
 namespace console\controllers;
-
-use common\models\Categories;
-use common\models\CategoryIndustries;
 use common\models\Cities;
-use common\models\ContentArticles;
-use common\models\ContentCategories;
-use common\models\ContentNews;
-use common\models\Developers;
 use common\models\Entities;
 use common\models\ExchangePoints;
 use common\models\ExchangeRates;
 use common\models\OpeningHours;
-use common\models\Pairs;
-use common\models\Programs;
+use common\models\Pairs;;
 use common\models\Regions;
-use common\models\Reviews;
 use common\models\services\GoogleGeolocation;
 use Faker\Factory;
 use yii\db\Expression;
-use yii\helpers\ArrayHelper;
 
 class FakeController extends \yii\console\Controller
 {

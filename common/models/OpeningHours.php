@@ -29,6 +29,7 @@ class OpeningHours extends \yii\db\ActiveRecord
 
     public static function map()
     {
+
         $times = [];
         foreach (range(0, 1440, 5) as $time) {
             $times[$time] = str_pad(floor($time / 60), 2, "0", STR_PAD_LEFT) . ":" . str_pad(($time - floor($time / 60) * 60), 2, "0", STR_PAD_LEFT);

@@ -53,10 +53,25 @@ $.ajax({
 JS;
         $this->registerJs($js, 4);
         ?>
-        <?= $form->field($model, 'phone1')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'phone1')->widget(\yii\widgets\MaskedInput::className(), [
+            'mask' => '+999999999999',
+        ]) ?>
 
-        <?= $form->field($model, 'phone2')->textInput(['maxlength' => true]) ?>
 
+        <?= $form->field($model, 'phone2')->widget(\yii\widgets\MaskedInput::className(), [
+            'mask' => '+999999999999',
+        ]) ?>
+
+        <?= $form->field($model, 'viber')->widget(\yii\widgets\MaskedInput::className(), [
+            'mask' => '+999999999999',
+        ]) ?>
+
+        <?= $form->field($model, 'telegram')->widget(\yii\widgets\MaskedInput::className(), [
+            'mask' => '+999999999999',
+        ]) ?>
+
+        <?= $form->field($model, 'skype')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
         <?= $form->field($model, 'link')->textInput(['maxlength' => true]) ?>
 
@@ -67,15 +82,14 @@ JS;
                 [
                     'name' => 'day',
                     'type' => 'dropDownList',
-                    'title' => 'User',
-                    'defaultValue' => 1,
+                    'title' => 'День недели',
                     'items' => OpeningHours::mapDays(),
                 ],
 
                 [
                     'name' => 'time_start',
                     'type' => 'dropDownList',
-                    'title' => 'Начало работы',
+                    'title' => 'С',
                     'items' => OpeningHours::map(),
                     'enableError' => true,
                     'options' => [
@@ -85,7 +99,26 @@ JS;
                 [
                     'name' => 'time_end',
                     'type' => 'dropDownList',
-                    'title' => 'Окончание работы',
+                    'title' => 'До',
+                    'items' => OpeningHours::map(),
+                    'enableError' => true,
+                    'options' => [
+                        'class' => 'input-priority'
+                    ]
+                ], [
+                    'name' => 'break_time_start',
+                    'type' => 'dropDownList',
+                    'title' => 'Обед с',
+                    'items' => OpeningHours::map(),
+                    'enableError' => true,
+                    'options' => [
+                        'class' => 'input-priority'
+                    ]
+                ],
+                [
+                    'name' => 'break_time_end',
+                    'type' => 'dropDownList',
+                    'title' => 'Обед до',
                     'items' => OpeningHours::map(),
                     'enableError' => true,
                     'options' => [

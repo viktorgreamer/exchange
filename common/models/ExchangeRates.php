@@ -68,7 +68,7 @@ class ExchangeRates extends \yii\db\ActiveRecord
     {
         return [
             [['point_id', 'pair_id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['buy', 'sell'], 'number'],
+            [['buy', 'sell'], 'number','min' => 0],
             [['point_id', 'pair_id','buy','sell'], 'required'],
             [['point_id'], 'exist', 'skipOnError' => true, 'targetClass' => ExchangePoints::className(), 'targetAttribute' => ['point_id' => 'id']],
             [['pair_id'], 'exist', 'skipOnError' => true, 'targetClass' => Pairs::className(), 'targetAttribute' => ['pair_id' => 'id']],

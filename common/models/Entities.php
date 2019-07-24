@@ -68,10 +68,10 @@ class Entities extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'id'),
             'user_id' => Yii::t('app', 'id Пользователя'),
-            'name' => Yii::t('app', 'Наименование'),
+            'name' => Yii::t('app', 'Название обменной сети (Компания)'),
             'has_one_currency' => Yii::t('app', 'Единый курс'),
             'has_one_opening_hours' => Yii::t('app', 'Единый график работы'),
-            'phone' => Yii::t('app', 'Телефон'),
+            'phone' => Yii::t('app', 'Телефон компании'),
             'status' => Yii::t('app', 'Статус'),
         ];
     }

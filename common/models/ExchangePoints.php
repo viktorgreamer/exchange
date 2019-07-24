@@ -5,6 +5,7 @@ namespace common\models;
 use common\models\services\GoogleGeolocation;
 use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
 /**
@@ -40,6 +41,11 @@ use yii\helpers\Html;
 class ExchangePoints extends \yii\db\ActiveRecord
 {
 
+    public static function map()
+    {
+        return ArrayHelper::map(self::find()->all(), 'id', 'name');
+    }
+
     public function behaviors()
     {
         return [
@@ -50,6 +56,11 @@ class ExchangePoints extends \yii\db\ActiveRecord
                 ],
             ],
         ];
+    }
+
+    public function formName()
+    {
+        return '';
     }
 
     public function transactions()
@@ -76,8 +87,10 @@ class ExchangePoints extends \yii\db\ActiveRecord
             [['latitude', 'longitude', 'rating', 'rating_geo', 'rating_actuality', 'rating_service'], 'number'],
             [['entity_id', 'city_id', 'region_id'], 'required'],
             [['entity_id', 'city_id', 'region_id', 'status'], 'integer'],
-            [['address', 'name', 'link'], 'string', 'max' => 256],
-            [['phone1', 'phone2'], 'string', 'max' => 20],
+            [['address', 'name', 'link','skype'], 'string', 'max' => 256],
+            [['link'], 'url'],
+            [['phone1', 'phone2','viber','telegram'], 'string', 'max' => 20],
+            [['email'], 'email'],
             [['schedule'], 'safe'],
             [['main'], 'boolean'],
             [['city_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cities::className(), 'targetAttribute' => ['city_id' => 'id']],
@@ -120,7 +133,7 @@ class ExchangePoints extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'id'),
             'address' => Yii::t('app', 'Адрес'),
-            'main' => Yii::t('app', 'Главная точка'),
+            'main' => Yii::t('app', 'Главный офис'),
             'latitude' => Yii::t('app', 'Широта'),
             'longitude' => Yii::t('app', 'Долгота'),
             'entity_id' => Yii::t('app', 'Юрлицо'),
@@ -129,13 +142,17 @@ class ExchangePoints extends \yii\db\ActiveRecord
             'entity.name' => Yii::t('app', 'Юрлицо'),
             'city.name' => Yii::t('app', 'Город'),
             'region.name' => Yii::t('app', 'Район'),
-            'phone1' => Yii::t('app', 'Телефон1'),
-            'phone2' => Yii::t('app', 'Телефон2'),
+            'phone1' => Yii::t('app', 'Телефон Пункта'),
+            'phone2' => Yii::t('app', 'Телефон Пункта'),
+            'telegram' => Yii::t('app', 'Telegram'),
+            'viber' => Yii::t('app', 'Viber'),
+            'email' => Yii::t('app', 'Email'),
+            'skype' => Yii::t('app', 'Skype'),
             'name' => Yii::t('app', 'Наименование'),
             'link' => Yii::t('app', 'Ссылка на сайт'),
             'status' => Yii::t('app', 'Статус'),
             'rating' => Yii::t('app', 'Рейтинг'),
-            'rating_geo' => Yii::t('app', 'Рейтинг расположения'),
+            'rating_geo' => Yii::t('app', 'Рейтинг посещаемости'),
             'rating_actuality' => Yii::t('app', 'Рейтинг актуальности курса'),
             'rating_service' => Yii::t('app', 'Рейтинг обслуживания'),
         ];
@@ -260,8 +277,10 @@ class ExchangePoints extends \yii\db\ActiveRecord
         $fields[] = 'today';
         return $fields;
     }
-    public function getToday() {
-        return $this->hasOne(OpeningHours::className(),['exchange_point_id' => 'id'])->select(['time_start','time_end','break_time_start','break_time_end'])->andWhere(['day' => date('w')]);
+
+    public function getToday()
+    {
+        return $this->hasOne(OpeningHours::className(), ['exchange_point_id' => 'id'])->select(['time_start', 'time_end', 'break_time_start', 'break_time_end'])->andWhere(['day' => date('w')]);
     }
 
     public
@@ -270,7 +289,7 @@ class ExchangePoints extends \yii\db\ActiveRecord
         $schedule = [];
         if (!$this->openingHours) {
             foreach (range(1, 7) as $day) {
-                $schedule[] = new OpeningHours(['day' => $day, 'time_start' => 60 * 8, 'time_end' => 60 * 18]);
+                $schedule[] = new OpeningHours(['day' => $day, 'time_start' => 60 * 8, 'time_end' => 60 * 18, 'break_time_start' => 60 * 13, 'break_time_end' => 60 * 14]);
             }
         } else {
             /* if ($this->entity->has_one_opening_hours and !$this->main) {
@@ -318,7 +337,6 @@ class ExchangePoints extends \yii\db\ActiveRecord
             foreach ($this->exchangeRates as $exchangeRate) {
                 $trs[] = Html::tag('tr', Html::tag('td', $exchangeRate->pair->render . Html::tag('td', $exchangeRate->buy) . Html::tag('td', $exchangeRate->sell)));
             }
-
             return Html::tag('table', implode("", $trs), ['class' => 'table table-stripped']);
         }
     }

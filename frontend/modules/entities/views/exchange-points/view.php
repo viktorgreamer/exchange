@@ -1,5 +1,6 @@
 <?php
 
+use common\models\ExchangePoints;
 use common\models\ExchangeRates;
 use common\models\OpeningHours;
 use yii\data\ActiveDataProvider;
@@ -82,6 +83,15 @@ $this->params['breadcrumbs'][] = $this->title;
                         'value' => function (OpeningHours $model) {
                             return OpeningHours::map()[$model->time_end];
                         }],
+                    [
+                        'attribute' => 'break_time_start',
+                        'value' => function (OpeningHours $model) {
+                            return OpeningHours::map()[$model->time_start];
+                        }], [
+                        'attribute' => 'break_time_end',
+                        'value' => function (OpeningHours $model) {
+                            return OpeningHours::map()[$model->time_end];
+                        }],
 
 
                 ]
@@ -94,7 +104,13 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= DetailView::widget([
                 'model' => $model,
                 'attributes' => [
-                    'id',
+                    'name',
+                    ['attribute' => 'main',
+                        'format' => 'html',
+                        'value' => function (ExchangePoints $model) {
+                            return $model->main ? $model->attributeLabels()['main'] : "Дополнительный офис";
+                        }
+                    ],
                     'address',
                     'entity.name',
                     'city.name',
@@ -102,6 +118,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     'phone1',
                     'phone2',
                     'name',
+                    'telegram',
+                    'skype',
+                    'viber',
+                    'email',
                     'link',
                     'rating',
                     'rating_geo',

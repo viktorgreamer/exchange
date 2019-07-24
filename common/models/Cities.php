@@ -31,6 +31,7 @@ class Cities extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'string', 'max' => 256],
+            [['name'], 'unique'],
         ];
     }
 

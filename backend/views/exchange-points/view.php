@@ -82,6 +82,15 @@ $this->params['breadcrumbs'][] = $this->title;
                         'value' => function (OpeningHours $model) {
                             return OpeningHours::map()[$model->time_end];
                         }],
+                    [
+                        'attribute' => 'break_time_start',
+                        'value' => function (OpeningHours $model) {
+                            return OpeningHours::map()[$model->time_start];
+                        }], [
+                        'attribute' => 'break_time_end',
+                        'value' => function (OpeningHours $model) {
+                            return OpeningHours::map()[$model->time_end];
+                        }],
 
 
                 ]
@@ -102,6 +111,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     'phone1',
                     'phone2',
                     'name',
+                    'telegram',
+                    'skype',
+                    'viber',
+                    'email',
                     'link',
                     'rating',
                     'rating_geo',

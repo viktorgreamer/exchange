@@ -1,5 +1,6 @@
 <?php
 
+use common\models\ExchangePoints;
 use common\models\ExchangeRates;
 use common\models\Pairs;
 use yii\helpers\Html;
@@ -28,9 +29,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             [
                 'attribute' => 'point_id',
-                'filter' => \common\models\Entities::map(),
+                'label' => 'Пункт обмена',
+                'filter' => ExchangePoints::map(),
                 'value' => function (ExchangeRates $model) {
-                    return $model->point->entity->name;
+                    return $model->point->name;
                 },
             ],
 

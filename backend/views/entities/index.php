@@ -3,6 +3,7 @@
 use common\models\Entities;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Url;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\EntitiesSearch */
@@ -30,7 +31,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
            // 'user_id',
-            'name',
+            [
+                'attribute' => 'name',
+               'format' => 'html',
+                'value' => function (Entities $model) {
+                    return Html::a($model->name, Url::to(['exchange-points/index','entity_id' => $model->id]));
+                }
+            ],
             [
                 'attribute' => 'has_one_currency',
                 'filter' => [0 => 'Нет', 1 => "Да"],

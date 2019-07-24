@@ -37,6 +37,11 @@ class ExchangeRatesSearch extends ExchangeRates
         return Model::scenarios();
     }
 
+    public function formName()
+    {
+        return '';
+    }
+
     /**
      * Creates data provider instance with search query applied
      *
@@ -78,8 +83,10 @@ class ExchangeRatesSearch extends ExchangeRates
             'status' => $this->status,
         ]);
 
-        if ($this->type == 'buy') $query->orderBy(['r.buy' => SORT_ASC]);
-        if ($this->type == 'sell') $query->orderBy(['r.sell' => SORT_DESC]);
+        if (!\Yii::$app->request->getQueryParam('sort')) {
+            if ($this->type == 'buy') $query->orderBy(['r.buy' => SORT_ASC]);
+            if ($this->type == 'sell') $query->orderBy(['r.sell' => SORT_DESC]);
+        }
 
 
         return $dataProvider;

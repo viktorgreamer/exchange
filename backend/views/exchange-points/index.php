@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Entities;
 use common\models\ExchangePoints;
 use yii\helpers\Html;
 use yii\grid\GridView;
@@ -30,11 +31,21 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'entity.name',
-            ['attribute' => 'address',
+
+            [
+                    'attribute' => 'address',
                 'format' => 'html',
                 'value' => function (ExchangePoints $model) {
                     return $model->city->name."<br>".$model->region->name."<br>".$model->address;
+                }
+            ],
+            [
+                    'attribute' =>  'entity_id',
+                'label' => 'Компания',
+                'format' => 'html',
+                'filter' => Entities::map(),
+                'value' => function (ExchangePoints $model) {
+                    return $model->entity->name;
                 }
             ],
 

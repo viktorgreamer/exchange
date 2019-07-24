@@ -50,6 +50,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function (ExchangePoints $model) {
                 return $model->rates;
             }],
+            ['attribute' => 'main',
+                'format' => 'html',
+                'value' => function (ExchangePoints $model) {
+                    return $model->main ? $model->attributeLabels()['main'] : "Дополнительный офис";
+                }
+            ],
             //'rating',
             //'rating_geo',
             //'rating_actuality',

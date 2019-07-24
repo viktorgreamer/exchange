@@ -1,5 +1,7 @@
 <?php
 
+use common\models\Cities;
+use common\models\Regions;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
@@ -29,7 +31,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'name',
-            'city_id',
+            [
+                'label' => 'Город',
+                'attribute' => 'city_id',
+                'filter' => Cities::map(),
+                'value' => function (Regions $model) {
+                    return $model->city->name;
+                },
+            ],
+
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
