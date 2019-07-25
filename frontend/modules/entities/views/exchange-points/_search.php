@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Cities;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -17,43 +18,24 @@ use yii\widgets\ActiveForm;
             'data-pjax' => 1
         ],
     ]); ?>
+    <div class="row">
+        <div class="col-lg-3">
+            <?= $form->field($model, 'address') ?>
 
-    <?= $form->field($model, 'id') ?>
+        </div>
+        <div class="col-lg-3">
+            <?php echo $form->field($model, 'city_id')->dropDownList(Cities::map()); ?>
+        </div>
+        <div class="col-lg-3">
+            <?php echo $form->field($model, 'name') ?>
 
-    <?= $form->field($model, 'address') ?>
+        </div><div class="col-lg-3">
+            <div class="form-group">
+                <?= Html::submitButton(Yii::t('app', 'Поиск'), ['class' => 'btn btn-primary']) ?>
+                <?= Html::resetButton(Yii::t('app', 'Сбросить'), ['class' => 'btn btn-outline-secondary']) ?>
+            </div>
 
-    <?= $form->field($model, 'latitude') ?>
-
-    <?= $form->field($model, 'longitude') ?>
-
-    <?= $form->field($model, 'entity_id') ?>
-
-    <?php // echo $form->field($model, 'city_id') ?>
-
-    <?php // echo $form->field($model, 'region_id') ?>
-
-
-    <?php // echo $form->field($model, 'phone1') ?>
-
-    <?php // echo $form->field($model, 'phone2') ?>
-
-    <?php // echo $form->field($model, 'name') ?>
-
-    <?php // echo $form->field($model, 'link') ?>
-
-    <?php // echo $form->field($model, 'status') ?>
-
-    <?php // echo $form->field($model, 'rating') ?>
-
-    <?php // echo $form->field($model, 'rating_geo') ?>
-
-    <?php // echo $form->field($model, 'rating_actuality') ?>
-
-    <?php // echo $form->field($model, 'rating_service') ?>
-
-    <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-outline-secondary']) ?>
+        </div>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -16,7 +16,9 @@ use common\models\OpeningHours;
 use common\models\Pairs;;
 use common\models\Regions;
 use common\models\services\GoogleGeolocation;
+use common\models\User;
 use Faker\Factory;
+use Yii;
 use yii\db\Expression;
 
 class FakeController extends \yii\console\Controller
@@ -38,8 +40,6 @@ class FakeController extends \yii\console\Controller
             $user->status = 10;
             if (!$user->save()) $this->errors[] = $user->errors;
         }
-
-
     }
 
 
@@ -142,6 +142,20 @@ class FakeController extends \yii\console\Controller
     public function actionTimes()
     {
         print_r(OpeningHours::map());
+    }
+
+
+    public function actionMail() {
+        return Yii::$app
+            ->mailer
+            ->compose(
+                ['html' => 'emailVerify-html', 'text' => 'emailVerify-text'],
+                ['user' => User::find()->one()]
+            )
+            ->setFrom(['viktorgreamer1@yandex.com' => 'hjhjh'])
+            ->setTo($this->email)
+            ->setSubject('Account registration at ' . Yii::$app->name)
+            ->send();
     }
 
 }

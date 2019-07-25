@@ -11,7 +11,7 @@ use yii\widgets\DetailView;
 /* @var $model common\models\ExchangePoints */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Exchange Points'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', ' Пункты обмена'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>

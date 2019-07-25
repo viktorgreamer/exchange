@@ -39,8 +39,9 @@ AppAsset::register($this);
 
     $menuItems = [
         ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'Пункты обмена', 'url' => ['exchange-points/index']],
+        ['label' => 'Пункты обмена', 'url' => ['/entities/exchange-points']],
         ['label' => 'Данные', 'url' => ['/entities/settings']],
+        ['label' => 'Группы курсов', 'url' => ['/entities/exchange-rates-groups']],
     ];
 
     if (Yii::$app->user->isGuest) {

@@ -35,6 +35,16 @@ return [
             'class' => 'common\models\User',
         ],
 
+        'urlManager' => [
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'rules' => [
+
+            ],
+        ],
+
+
+
 
         'authManager' => [
             'class' => 'yii\rbac\DbManager',

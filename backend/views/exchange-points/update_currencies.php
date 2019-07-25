@@ -12,7 +12,7 @@ use unclead\multipleinput\MultipleInput;
 $this->title = Yii::t('app', 'Редактирование курсов', [
     'name' => $model->name,
 ]);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Exchange Points'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', ' Пункты обмена'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>

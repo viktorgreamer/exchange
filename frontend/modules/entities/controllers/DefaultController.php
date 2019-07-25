@@ -20,7 +20,7 @@ class DefaultController extends Controller
         if (($user = \Yii::$app->user->identity) && ($model = $user->entity)) {
             return $this->redirect('/entities/exchange-points/index');
         } else {
-            return $this->redirect('login');
+            return $this->redirect('/entities/settings/create');
         }
 
     }

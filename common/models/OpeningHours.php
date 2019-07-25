@@ -98,6 +98,7 @@ class OpeningHours extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+
     public function attributeLabels()
     {
         return [
@@ -105,9 +106,9 @@ class OpeningHours extends \yii\db\ActiveRecord
             'exchange_point_id' => Yii::t('app', 'Точка обмена'),
             'day' => Yii::t('app', 'День недели'),
             'time_start' => Yii::t('app', 'Начало'),
-            'break_time_start' => Yii::t('app', 'Начало перерыва'),
+            'break_time_start' => Yii::t('app', 'Обед с'),
             'time_end' => Yii::t('app', 'Окончание'),
-            'break_time_end' => Yii::t('app', 'Окончание перерыва'),
+            'break_time_end' => Yii::t('app', 'До'),
         ];
     }
 

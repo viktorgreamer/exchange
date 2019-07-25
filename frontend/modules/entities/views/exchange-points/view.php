@@ -12,28 +12,28 @@ use yii\widgets\DetailView;
 /* @var $model common\models\ExchangePoints */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Exchange Points'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Пункты обмена'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="exchange-points-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h3><?= Html::encode($this->title) ?></h3>
 
     <p>
         <?= Html::a(Yii::t('app', 'Редактировать'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a(Yii::t('app', 'Редактировать Курсы'), ['exchange-points/update-currencies', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Удалить'), ['delete', 'id' => $model->id], [
+       <!-- --><?/*= Html::a(Yii::t('app', 'Удалить'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => Yii::t('app', 'Вы действительно хотите удалить точку обмена?'),
                 'method' => 'post',
             ],
-        ]) ?>
+        ]) */?>
     </p>
     <div class="row">
         <div class="col-lg-6">
-            <h5> Ставки</h5>
+            <h5> Курсы</h5>
             <?php
             echo \yii\grid\GridView::widget([
                 'dataProvider' => new ActiveDataProvider([

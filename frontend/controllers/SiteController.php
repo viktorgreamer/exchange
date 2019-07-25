@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\Regions;
+use common\models\User;
 use frontend\components\AuthHandler;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
@@ -273,15 +274,21 @@ class SiteController extends Controller
     {
         $model = new ResendVerificationEmailForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->sendEmail()) {
-                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
-                return $this->goHome();
+            try {
+                if ($model->sendEmail()) {
+                    Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
+                    return $this->goHome();
+                }
+            } catch (\Exception $exception) {
+                Yii::$app->session->setFlash('error', 'Sorry, we are unable to resend verification email for the provided email address.');
+
             }
-            Yii::$app->session->setFlash('error', 'Sorry, we are unable to resend verification email for the provided email address.');
         }
 
         return $this->render('resendVerificationEmail', [
             'model' => $model
         ]);
     }
+
+
 }

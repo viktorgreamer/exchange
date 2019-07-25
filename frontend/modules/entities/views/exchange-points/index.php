@@ -3,35 +3,44 @@
 use common\models\ExchangePoints;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Url;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\ExchangePointsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Exchange Points');
+$this->title = Yii::t('app', 'Пункты обмена');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="exchange-points-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h3><?= Html::encode($this->title) ?></h3>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Exchange Points'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Добавить точку обмена'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+       // 'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'entity.name',
-            ['attribute' => 'address',
+            //'id',
+            [
+                'attribute' => 'name',
+                'format' => 'html',
+                'value' => function (ExchangePoints $model) {
+                    return Html::a($model->name, Url::to(['exchange-points/view','id' => $model->id]));
+                }
+            ],
+
+            [
+                    'attribute' => 'address',
                 'format' => 'html',
                 'value' => function (ExchangePoints $model) {
                     return $model->city->name."<br>".$model->region->name."<br>".$model->address;
@@ -45,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'link',
             // 'status',
             [
-                'label' => 'Ставки',
+                'label' => 'Курсы',
                 'format' => 'html',
                 'value' => function (ExchangePoints $model) {
                 return $model->rates;
