@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h3><?= Html::encode($this->title) ?></h3>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Добавить точку обмена'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Добавить пункт обмена'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php Pjax::begin(); ?>
@@ -59,12 +59,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function (ExchangePoints $model) {
                 return $model->rates;
             }],
-            ['attribute' => 'main',
+           /* ['attribute' => 'main',
                 'format' => 'html',
                 'value' => function (ExchangePoints $model) {
                     return $model->main ? $model->attributeLabels()['main'] : "Дополнительный офис";
                 }
-            ],
+            ],*/
             //'rating',
             //'rating_geo',
             //'rating_actuality',

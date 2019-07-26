@@ -67,7 +67,6 @@ class ExchangePointsController extends Controller
         $model = new ExchangePoints();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $model->setSchedule(Yii::$app->request->post()['schedule']);
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -88,7 +87,6 @@ class ExchangePointsController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $model->setSchedule(Yii::$app->request->post()['schedule']);
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -107,7 +105,7 @@ class ExchangePointsController extends Controller
     public function actionUpdateCurrencies($id)
     {
         $model = $this->findModel($id);
-        if ($model->setCurrencies(Yii::$app->request->post()['ExchangePoints']['currencies'])) {
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
         return $this->render('update_currencies', [

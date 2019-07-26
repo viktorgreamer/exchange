@@ -11,6 +11,8 @@ use common\models\ExchangePoints;
  */
 class ExchangePointsSearch extends ExchangePoints
 {
+
+    public $query;
     /**
      * {@inheritdoc}
      */
@@ -19,7 +21,16 @@ class ExchangePointsSearch extends ExchangePoints
         return [
             [['id', 'entity_id', 'city_id', 'region_id', 'status'], 'integer'],
             [['address', 'phone1', 'phone2', 'name', 'link'], 'safe'],
+            [['query'], 'string'],
             [['latitude', 'longitude', 'rating', 'rating_geo', 'rating_actuality', 'rating_service'], 'number'],
+        ];
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'query' => "Запрос",
+             'city_id' => 'Город'
         ];
     }
 
@@ -42,6 +53,7 @@ class ExchangePointsSearch extends ExchangePoints
     public function search($params)
     {
         $query = ExchangePoints::find();
+        $query->from(['p' => ExchangePoints::tableName()]);
 
         // add conditions that should always apply here
 
@@ -59,6 +71,24 @@ class ExchangePointsSearch extends ExchangePoints
 
        if (\Yii::$app->user->identity->entity) $query->andWhere(['entity_id' => \Yii::$app->user->identity->entity->id]);
        else $query->where('0=1');
+
+        if ($this->query) {
+            $query->joinWith('region as region');
+            $query->joinWith('city as city');
+
+            $query->andWhere(['OR',
+                ['like', 'p.name',$this->query],
+                ['like', 'address',$this->query],
+                ['like', 'region.name',$this->query],
+                ['like', 'city.name',$this->query],
+            ]);
+
+        }
+
+        if ($this->city) {
+            $query->andWhere(['p.city_id' => $this->city_id]);
+        }
+
         return $dataProvider;
     }
 }

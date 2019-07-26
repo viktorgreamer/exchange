@@ -1,6 +1,8 @@
 <?php
 
 use common\models\Cities;
+use common\models\ExchangePoints;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -20,19 +22,23 @@ use yii\widgets\ActiveForm;
     ]); ?>
     <div class="row">
         <div class="col-lg-3">
-            <?= $form->field($model, 'address') ?>
+            <?= $form->field($model, 'query') ?>
 
         </div>
         <div class="col-lg-3">
-            <?php echo $form->field($model, 'city_id')->dropDownList(Cities::map()); ?>
+            <?php echo $form->field($model, 'city_id')->dropDownList(
+                    [null => ''] + ArrayHelper::map(Cities::find()
+                        ->where([
+                                'id' => ExchangePoints::find()->select('city_id')
+                                    ->andWhere(['entity_id' => Yii::$app->user->identity->entity->id])
+                                    ->groupBy('city_id')
+                                    ->column()
+                        ])->all(),'id','name'));
+            ?>
         </div>
         <div class="col-lg-3">
-            <?php echo $form->field($model, 'name') ?>
-
-        </div><div class="col-lg-3">
             <div class="form-group">
                 <?= Html::submitButton(Yii::t('app', 'Поиск'), ['class' => 'btn btn-primary']) ?>
-                <?= Html::resetButton(Yii::t('app', 'Сбросить'), ['class' => 'btn btn-outline-secondary']) ?>
             </div>
 
         </div>

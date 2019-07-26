@@ -13,6 +13,7 @@ class ExchangePointsSearch extends Model
 {
 
     public $id;
+    public $query;
     public $address;
     public $latitude;
     public $longitude;
@@ -39,7 +40,8 @@ class ExchangePointsSearch extends Model
     {
         return [
             [['id', 'entity_id', 'city_id', 'region_id', 'status'], 'integer'],
-            [['address', 'phone1', 'phone2', 'name', 'link'], 'safe'],
+            [['phone1', 'phone2', 'name', 'link'], 'safe'],
+            [['query'], 'string'],
             [['latitude', 'longitude', 'rating', 'rating_geo', 'rating_actuality', 'rating_service'], 'number'],
         ];
     }
@@ -75,7 +77,7 @@ class ExchangePointsSearch extends Model
             'query' => $query,
         ]);
 
-        $this->load($params,'');
+        $this->load($params, '');
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
@@ -98,8 +100,19 @@ class ExchangePointsSearch extends Model
             'rating_service' => $this->rating_service,
         ]);
 
-        $query->andFilterWhere(['like', 'address', $this->address])
-            ->andFilterWhere(['like', 'phone1', $this->phone1])
+
+        if ($this->address) {
+            $query->joinWith('region as region');
+            $query->joinWith('city as city');
+
+            $query->andWhere(['OR',
+                ['like', 'address',$this->address],
+                ['like', 'region.name',$this->address],
+                ['like', 'city.name',$this->address],
+            ]);
+
+        }
+        $query->andFilterWhere(['like', 'phone1', $this->phone1])
             ->andFilterWhere(['like', 'phone2', $this->phone2])
             ->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'link', $this->link]);

@@ -75,7 +75,7 @@ JS;
 
         <?= $form->field($model, 'link')->textInput(['maxlength' => true]) ?>
 
-        <?= $form->field($model, 'schedule')->widget(MultipleInput::className(), [
+        <?= $form->field($model, 'openingHours')->widget(MultipleInput::className(), [
             'min' => 7,
             'max' => 7,
             'columns' => [

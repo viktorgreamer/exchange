@@ -25,11 +25,21 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Редактировать');
             <div class="col-lg-6">
                 <?php $form = ActiveForm::begin(); ?>
 
-                <?= $form->field($model, 'currencies')->widget(MultipleInput::className(), [
+                <?= $form->field($model, 'exchangeRates')->widget(MultipleInput::className(), [
                         'addButtonPosition' => MultipleInput::POS_HEADER,
                     'min' => 3,
                     'max' => Pairs::find()->count(),
                     'columns' => [
+                        [
+                            'name' => 'id',
+                            'type' => 'hiddenInput',
+                        ],
+                        [
+                            'name' => 'point_id',
+                            'type' => 'hiddenInput',
+                            'title' => 'Валютная пара',
+                            'value' => $model->id
+                        ],
                         [
                             'name' => 'pair_id',
                             'type' => 'dropDownList',

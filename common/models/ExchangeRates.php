@@ -68,11 +68,17 @@ class ExchangeRates extends \yii\db\ActiveRecord
     {
         return [
             [['point_id', 'pair_id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['buy', 'sell'], 'number','min' => 0],
-            [['point_id', 'pair_id','buy','sell'], 'required'],
+            [['buy', 'sell'], 'number', 'min' => 0],
+            [['pair_id', 'buy', 'sell'], 'required'],
             [['point_id'], 'exist', 'skipOnError' => true, 'targetClass' => ExchangePoints::className(), 'targetAttribute' => ['point_id' => 'id']],
             [['pair_id'], 'exist', 'skipOnError' => true, 'targetClass' => Pairs::className(), 'targetAttribute' => ['pair_id' => 'id']],
+            [['pair_id', 'point_id'], 'existedPair', 'message' => 'Выбраны одинаковые валютные пары.'],
         ];
+    }
+
+    public function existedPair()
+    {
+        return true;
     }
 
     /**
@@ -82,7 +88,7 @@ class ExchangeRates extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'id'),
-            'point_id' => Yii::t('app', 'Сеть'),
+            'point_id' => Yii::t('app', 'Пункт обмена'),
             'pair_id' => Yii::t('app', 'Валюты'),
             'status' => Yii::t('app', 'Статус'),
             'buy' => Yii::t('app', 'Цена покупки'),
@@ -91,7 +97,6 @@ class ExchangeRates extends \yii\db\ActiveRecord
             'updated_at' => Yii::t('app', 'Обновлен в'),
         ];
     }
-
 
 
     /**

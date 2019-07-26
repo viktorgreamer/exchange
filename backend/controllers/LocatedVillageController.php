@@ -1,18 +1,18 @@
 <?php
 
-namespace frontend\modules\entities\controllers;
+namespace backend\controllers;
 
 use Yii;
-use common\models\GroupExchangeRates;
-use common\models\GroupExchangeRatesSearch;
+use common\models\LocatedVillage;
+use common\models\LocatedVillageSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * GroupExchangeRatesController implements the CRUD actions for GroupExchangeRates model.
+ * LocatedVillageController implements the CRUD actions for LocatedVillage model.
  */
-class GroupExchangeRatesController extends Controller
+class LocatedVillageController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -30,12 +30,12 @@ class GroupExchangeRatesController extends Controller
     }
 
     /**
-     * Lists all GroupExchangeRates models.
+     * Lists all LocatedVillage models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new GroupExchangeRatesSearch();
+        $searchModel = new LocatedVillageSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,12 +45,11 @@ class GroupExchangeRatesController extends Controller
     }
 
     /**
-     * Displays a single GroupExchangeRates model.
+     * Displays a single LocatedVillage model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-
     public function actionView($id)
     {
         return $this->render('view', [
@@ -59,14 +58,13 @@ class GroupExchangeRatesController extends Controller
     }
 
     /**
-     * Creates a new GroupExchangeRates model.
+     * Creates a new LocatedVillage model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-
     public function actionCreate()
     {
-        $model = new GroupExchangeRates();
+        $model = new LocatedVillage();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -78,7 +76,7 @@ class GroupExchangeRatesController extends Controller
     }
 
     /**
-     * Updates an existing GroupExchangeRates model.
+     * Updates an existing LocatedVillage model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -98,7 +96,7 @@ class GroupExchangeRatesController extends Controller
     }
 
     /**
-     * Deletes an existing GroupExchangeRates model.
+     * Deletes an existing LocatedVillage model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -112,15 +110,15 @@ class GroupExchangeRatesController extends Controller
     }
 
     /**
-     * Finds the GroupExchangeRates model based on its primary key value.
+     * Finds the LocatedVillage model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return GroupExchangeRates the loaded model
+     * @return LocatedVillage the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = GroupExchangeRates::findOne($id)) !== null) {
+        if (($model = LocatedVillage::findOne($id)) !== null) {
             return $model;
         }
 

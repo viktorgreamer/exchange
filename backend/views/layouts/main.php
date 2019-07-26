@@ -41,6 +41,10 @@ AppAsset::register($this);
         [
             'label' => 'Справочник',
             'items' => [
+                ['label' => 'Страны', 'url' => ['/located-countries/index']],
+                ['label' => 'Области', 'url' => ['/located-region/index']],
+                ['label' => 'Районы', 'url' => ['/located-area/index']],
+                ['label' => 'Нас.пункты', 'url' => ['/located-village/index']],
                 ['label' => 'Города', 'url' => ['/cities/index']],
                 ['label' => 'Районы', 'url' => ['/regions/index']],
                 ['label' => 'Валюты', 'url' => ['/currencies/index']],
