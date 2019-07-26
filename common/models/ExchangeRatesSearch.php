@@ -15,6 +15,7 @@ class ExchangeRatesSearch extends ExchangeRates
     public $region_id;
 
     public $type = 'buy';
+    public $bounds;
 
     /**
      * {@inheritdoc}
@@ -25,6 +26,7 @@ class ExchangeRatesSearch extends ExchangeRates
             [['id', 'point_id', 'pair_id', 'region_id', 'city_id', 'status', 'updated_at'], 'integer'],
             [['buy', 'sell'], 'number'],
             [['type'], 'string'],
+            [['bounds'], 'safe'],
         ];
     }
 
@@ -49,6 +51,7 @@ class ExchangeRatesSearch extends ExchangeRates
      *
      * @return ActiveDataProvider
      */
+
     public function search($params)
     {
         $query = ExchangeRates::find();
@@ -61,19 +64,29 @@ class ExchangeRatesSearch extends ExchangeRates
             'query' => $query,
         ]);
 
+
         $this->load($params, '');
 
         if (!$this->validate()) {
             return $dataProvider;
         }
 
-        if ($this->city_id) {
-            $query->andWhere(['p.city_id' => $this->city_id]);
+
+
+        if ($this->bounds) {
+            $bounds = json_decode($this->bounds);
+            $query->andWhere(['between','p.longitude', $bounds->west, $bounds->east]);
+            $query->andWhere(['between','p.latitude', $bounds->south,$bounds->north]);
+        } else {
+            if ($this->city_id) {
+                $query->andWhere(['p.city_id' => $this->city_id]);
+            }
+
+            if ($this->region_id) {
+                $query->andWhere(['p.region_id' => $this->region_id]);
+            }
         }
 
-        if ($this->region_id) {
-            $query->andWhere(['p.region_id' => $this->region_id]);
-        }
 
         // grid filtering conditions
         $query->andFilterWhere([

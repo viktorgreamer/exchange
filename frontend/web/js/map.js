@@ -2,13 +2,15 @@ var map;
 var markers = [];
 var infoWindows = [];
 var bounds = [];
-
+var options = {
+    imagePath: '/img/marker-red'
+};
 function initMap() {
-
-    map = new google.maps.Map(document.getElementById('map'), {
+        map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 50.45466, lng: 30.5238},
         zoom: 8
     });
+
 }
 
 function clearMarkers() {
@@ -48,6 +50,7 @@ function addMarker(rate, map) {
 
     markers.push(marker);
 
+
     loc = new google.maps.LatLng(marker.position.lat(), marker.position.lng());
     bounds.extend(loc);
 
@@ -57,17 +60,30 @@ function addMarker(rate, map) {
 initMap();
 
 
+google.maps.event.clearListeners(map, 'bounds_changed');
+
+
+setTimeout(function() {
+    google.maps.event.addListener(map, "bounds_changed", function() {
+        app.getRates();
+        // send the new bounds back to your server
+        console.log(map.getBounds());
+    });
+}, 3000);
+
+
 var app = new Vue({
     el: '#app',
     data: {
         pair_id: null,
-        type: 'buy',
+        type: true,
         city_id: null,
         region_id: null,
         cities: null,
         pairs: null,
         regions: null,
         rates: null,
+        bounds: null
 
     },
 
@@ -77,14 +93,17 @@ var app = new Vue({
                 params: {
                     city_id: this.city_id,
                     region_id: this.region_id,
-                    type: this.type,
-                    pair_id: this.pair_id
+                    type: this.type ? 'sell' : 'buy',
+                    pair_id: this.pair_id,
+                    bounds: map.getBounds()
                 }
             })
                 .then(function (response) {
+
+
                     if (response.status) {
                         app.rates = response.data;
-                        if (app.rates) {
+                        if (app.rates.length > 0) {
 
                             for (let i = 0; i < markers.length; i++) {
                                 markers[i].setMap(null);
@@ -94,8 +113,13 @@ var app = new Vue({
                             for (let i = 0; i < app.rates.length; i++) {
                                 addMarker(app.rates[i], map);
                             }
-                            map.fitBounds(bounds);
-                            map.panToBounds(bounds);
+                          //  map.fitBounds(bounds);
+                          //  map.panToBounds(bounds);
+
+                            // var markerCluster = new MarkerClusterer(map, markers, options);
+
+
+
 
                         }
 
@@ -107,6 +131,10 @@ var app = new Vue({
                     console.log(error);
                 })
                 .then(function () {
+
+
+
+
 
                 });
         },
@@ -177,3 +205,5 @@ var app = new Vue({
     }
 
 })
+
+

@@ -12,7 +12,7 @@ class RbacController extends Controller
     {
 
         //  Yii::$app->db->createCommand()->truncateTable('user')->execute();
-        /*$user = new User();
+      /*  $user = new User();
         $user->username = 'admin';
         $user->email = 'an.viktory@gmail.com';
         $user->status = 10;

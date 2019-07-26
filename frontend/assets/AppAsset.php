@@ -21,7 +21,8 @@ class AppAsset extends AssetBundle
         'js/vue.js',
         'js/axios.js',
         'https://maps.googleapis.com/maps/api/js?key=AIzaSyDy19iLKmlTFbnOwM3FHXJH5z1rTCkAkj8',
-        'js/map.js'
+        'js/clusters.js',
+        'js/map.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',
